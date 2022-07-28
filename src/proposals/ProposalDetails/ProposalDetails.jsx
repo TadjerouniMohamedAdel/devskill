@@ -5,7 +5,7 @@ import DetailsSection from './DetailsSection'
 import './ProposalDetails.css'
 
 const ProposalDetails = ({ proposal }) => {
-  const { speaker, description } = proposal
+  const { speaker, description,category } = proposal
   return (
     <div className="ProposalDetails">
       <DetailsSection
@@ -20,13 +20,18 @@ const ProposalDetails = ({ proposal }) => {
         className="ProposalDetails__category"
         name="category"
       >
+        <span className="ProposalDetails__category__value">
+          {category}
+        </span>
       </DetailsSection>
       <DetailsSection
         className="ProposalDetails__description"
         name="description"
       >
         <div className="ProposalDetails__description__value">
-          {description}
+          {description.split('\n').map(text=>(
+            <p key={new Date().toDateString()}>{text}</p>
+          ))}
         </div>
       </DetailsSection>
     </div>

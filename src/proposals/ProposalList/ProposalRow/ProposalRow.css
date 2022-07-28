@@ -29,7 +29,6 @@
 .ProposalRow--accepted .ProposalsRow__status_indicator {
     background-color: #36dd84;
 }
-
 .ProposalRow--rejected .ProposalsRow__status_indicator {
     background-color: #e5958e;
 }

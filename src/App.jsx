@@ -8,17 +8,13 @@ const App = () => (
     <div className="App">
       <main className="App_content">
         <Switch>
-          <Route path="/proposals/:proposalId">
-            {() => (
-              <ProposalDetailsPage id={'123'}/>
-            )}
+          <Route  path="/proposals/:proposalId">
+              <ProposalDetailsPage />
           </Route>
           <Route path="/proposals">
-            {() => (
               <ProposalListPage/>
-            )}
           </Route>
-          <Redirect to="/proposals"/>
+          <Redirect path="*" to="/proposals"/>
         </Switch>
       </main>
     </div>

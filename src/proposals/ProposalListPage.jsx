@@ -16,6 +16,7 @@ class ProposalListPage extends Component {
     getProposalList().then(proposals => {
       this.setState({
         proposals: proposals,
+        isLoading:false
       })
     })
   }
@@ -25,7 +26,7 @@ class ProposalListPage extends Component {
       const prevProposals = prevState.proposals
       const nextProposals = prevProposals.map(proposal =>
         proposal.id === id
-          ? proposal
+          ? {...proposal,status}
           : proposal
       )
       return {
@@ -33,17 +34,21 @@ class ProposalListPage extends Component {
       }
     })
     setProposalStatus(id, status)
+      
   }
 
   render () {
     const { isLoading, proposals } = this.state
     return (
       <Page title="Call for Papers">
-        <Loading/>
+        {
+          isLoading ? <Loading/> :
         <ProposalList
           proposals={proposals}
-          onProposalStatusUpdate={() => {}}
+          onProposalStatusUpdate={this.updateProposalStatus}
         />
+        }
+        
       </Page>
     )
   }

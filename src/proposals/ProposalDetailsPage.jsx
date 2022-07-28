@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link,withRouter } from 'react-router-dom'
 
 import Loading from '../Loading'
 import NotFound from '../NotFound'
@@ -11,10 +10,7 @@ import { getProposalDetails } from './service'
 
 class ProposalDetailsPage extends Component {
 
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-  }
-
+  
   state = {
     isLoading: true,
     isNotFound: false,
@@ -22,12 +18,17 @@ class ProposalDetailsPage extends Component {
   }
 
   componentDidMount () {
-    const { id } = this.props
+    const id  = this.props.match.params.proposalId
     getProposalDetails(id).then(proposal => {
       if (proposal) {
         this.setState({
           isLoading: false,
           proposal: proposal,
+        })
+      }else{
+        this.setState({
+          isLoading: false,
+          isNotFound: true,
         })
       }
     })
@@ -35,11 +36,11 @@ class ProposalDetailsPage extends Component {
 
   render () {
     const { isNotFound, isLoading, proposal } = this.state
-    if (isNotFound) return <NotFound/>
+    if (!isLoading && isNotFound) return <NotFound/>
     return (
       <Page
         className="ProposalDetailsPage"
-        title={isLoading ? '…' : 'title'}
+        title={isLoading ? '…' : proposal.title}
       >
         <div className="ProposalDetailsPage__content">
           <div>
@@ -50,12 +51,12 @@ class ProposalDetailsPage extends Component {
               back to Call for Papers
             </Link>
           </div>
-          <Loading/>
-          <ProposalDetails proposal={{}}/>
+          {isLoading ? <Loading/>:<ProposalDetails proposal={proposal}/>
+}
         </div>
       </Page>
     )
   }
 }
 
-export default ProposalDetailsPage
+export default withRouter(ProposalDetailsPage);

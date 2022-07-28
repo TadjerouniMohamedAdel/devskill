@@ -7,19 +7,18 @@ import ProposalRow from './ProposalRow'
 
 const ProposalList = ({ proposals, onProposalStatusUpdate }) => (
   <ul className="ProposalList">
-    {[].map(proposal => (
+    {proposals.map(proposal => (
       <li
         key={proposal.id}
         className="ProposalList__item"
       >
         <Link
-          key={proposal.id}
           className="ProposalList__item__link"
-          to={'/proposal'}
+          to={ `/proposals/${proposal.id}`}
         >
           <ProposalRow
             proposal={proposal}
-            onStatusUpdate={() => {}}
+            onStatusUpdate={onProposalStatusUpdate}
           />
         </Link>
       </li>
